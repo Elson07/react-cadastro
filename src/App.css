@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
+.text-d{
+  text-align: right;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.titulo-cabecalho{
+  font-size: 1.5em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card-cadastro{
+  border: 1px solid black;
+  margin-top: 8rem;
+  margin-bottom: 5rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.cabecalho-card{
+  border-bottom: 1px solid rgb(0, 0, 0);
+  margin-bottom: 0.6rem;
+  background-color: rgb(226, 226, 226);
+}
+
+.titulo-card-cabecalho{
+  font-size: 1.4rem;
+}
+
+.sub-titulo-card{
+  font-size: 1.2rem;
+  color: rgb(99, 99, 99);
+}
+
+.btn-navegacao{
+  background: white;
+}
+
+.btn-nav-proximo{
+  background: none;
+  border:  1px solid green;
+  color: green;
+}
+
+.btn-nav-proximo:hover{
+  background: green;
+  border:  1px solid green;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-nav-voltar{
+  background: none;
+  border:  1px solid rgb(156, 156, 156);
+  color: rgb(156, 156, 156);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-nav-voltar:hover{
+  background: rgb(156, 156, 156);
+  border:  1px solid rgb(156, 156, 156);
+  color: white;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
