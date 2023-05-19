@@ -89,7 +89,7 @@ class Cadastro extends Component {
     if(this.state.posicao < 5){
 
       let estaCheio = false;
-    
+
       switch(this.state.posicao){
         case 0:
           if(this.state.nome && this.state.sobrenome && this.state.nascimento && this.state.cpf.length == 11){
@@ -144,7 +144,7 @@ class Cadastro extends Component {
 
       if(estaCheio){
         this.setState({
-          posicao: ++this.state.posicao
+          posicao: ++this.state.posicao,
         })
       }
     }
@@ -186,6 +186,7 @@ class Cadastro extends Component {
 
   //Botão Voltar e Avançar
   navegacao(){
+    let textBotaoProximo = 'Proxímo';
     let tamBot = 6;
     let voltar = 'd-grid ';
     if(this.state.posicao == 0){
@@ -195,6 +196,11 @@ class Cadastro extends Component {
       tamBot = 6;
       voltar = 'd-grid ';
     }
+    if(this.state.posicao == 5){
+      textBotaoProximo = 'Confirmar'
+    }else{
+      textBotaoProximo = 'Proxímo'
+    }
 
     return(
       
@@ -203,13 +209,13 @@ class Cadastro extends Component {
 
           <Col xxl={tamBot} xs={tamBot}>
             <div className= {voltar}>
-              <button className='p-2 mb-3 btn-nav-voltar' onClick={this.voltar}>{'Voltar'}</button>
+              <button className='p-2 mb-3 btn-cinza' onClick={this.voltar}>{'Voltar'}</button>
             </div>
           </Col>
 
           <Col xxl={tamBot} xs={tamBot}>
             <div className=" d-grid ">
-              <button className='p-2 mb-3 btn-nav-proximo' onClick={this.proximo}>{'Proxímo'}</button>
+              <button className='p-2 mb-3 btn-verde' onClick={this.proximo}>{textBotaoProximo}</button>
             </div>
           </Col>
 

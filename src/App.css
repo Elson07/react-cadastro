@@ -2,12 +2,26 @@
   text-align: right;
 }
 
+.text-c{
+  text-align: center;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover{
+  text-decoration: underline;
+  color: rgb(0, 223, 30);
+}
+
 .titulo-cabecalho{
   font-size: 1.5em;
 }
 
 .card-cadastro{
-  border: 1px solid black;
+  border: 1px solid rgb(0, 0, 0);
   margin-top: 8rem;
   margin-bottom: 5rem;
 }
@@ -15,7 +29,7 @@
 .cabecalho-card{
   border-bottom: 1px solid rgb(0, 0, 0);
   margin-bottom: 0.6rem;
-  background-color: rgb(226, 226, 226);
+  background-color: rgba(180, 180, 180, 0.404);
 }
 
 .titulo-card-cabecalho{
@@ -31,25 +45,13 @@
   background: white;
 }
 
-.btn-nav-proximo{
-  background: none;
-  border:  1px solid green;
-  color: green;
-}
-
-.btn-nav-proximo:hover{
+.btn-verde{
   background: green;
   border:  1px solid green;
   color: white;
 }
 
-.btn-nav-voltar{
-  background: none;
-  border:  1px solid rgb(156, 156, 156);
-  color: rgb(156, 156, 156);
-}
-
-.btn-nav-voltar:hover{
+.btn-cinza{
   background: rgb(156, 156, 156);
   border:  1px solid rgb(156, 156, 156);
   color: white;
