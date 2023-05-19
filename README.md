@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Aplicação de Cadastro em ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esta aplicação é um modelo de sistema para cadastro de usuário e login, este mesmo modelo pode ser aplicado a qualquer modelo de aplicação, a princípio ele possui alguns inputs e states pré definidos, mas é possível configurá-lo conforme a necessidade da aplicação, além disso também estou usando o bootstrap, para tornar a página responsiva, sendo necessário a instalação do react-bootstrap e bootstrap “raiz”, e o react-router-dom para trabalhar com rotas. 
 
-## Available Scripts
+Se atente a essas duas dependências. 
 
-In the project directory, you can run:
+Comando para instalação do react-bootstrap
+<pre>
+	npm install react-bootstrap bootstrap
+</pre>
 
-### `npm start`
+Comando para instalação do bootstrap “raiz”
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<pre>
+	npm install bootstrap@5.3.0-alpha3
+</pre>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Comando para instalação do react-router-dom
 
-### `npm test`
+<pre>
+	npm install react-router-dom
+</pre>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Com relação ao reac-bootstrap, importe o css para  diretório "src" no arquivo index.js
+<pre>
+	import  'bootstrap/dist/css/bootstrap.min.css';
+</pre>
 
-### `npm run build`
+## Classe cadastro 
+A classe cadastro algumas funções, na qual renderizam no render, sendo eles
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Cabeçalho 
+* Corpo do formulário
+* Botão de navegação 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Cabeçalho
+O cabeçalho é um container que possui dois espaços, um para uma img link para pagina inicial, e outro para o título "Cadastro" 
+  
+### Corpo do formulário
+O corpo do formulário é onde é renderizado os inputs, sendo que este inputs são divididos em etapas identificação, contato, endereço, usuário, carteira e resumo.<br/>
+ 
+### Botão de navegação 
+No botão de navegação é onde determina o que vais ser rederizado no corpo do formulário, neste caso o usuário inicia em identificação, ao preencher todos os campos obrigatórios, o usuário é direcionado para a próxima etapa é e contato, na qual preenche os inputs assim como na etapa anterior, porem com dados pertinentes a sua respectiva área, e assim sucessivamente, até chegar em resumo onde o mesmo vai poder checar os dados, podendo confirmar o cadastro ou editar, ou cancelar. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##Resultado
+Após o usuário realizar o cadastro e os dados estarem persistidos em um banco de dados o usuário podera fazer o login. 
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Obs. O foco desta aplicação é cadastro e não o login, poir isso o classe login é mais simples. 
