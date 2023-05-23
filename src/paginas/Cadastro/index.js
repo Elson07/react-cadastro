@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-//Meu estilo
+import firebase from '../../Firebase';
 import "../../App.css";
-
-//Icones
 import ArrowLeft from '../../assets/Icones/arrow-left-short.svg'
-
 import { Row, Col, Container } from 'react-bootstrap';
 
-//xxl={1} xl={1} lg={1} md={1}  sm={1} xs={2
 
 class Cadastro extends Component {
   
@@ -19,6 +14,7 @@ class Cadastro extends Component {
       titulo: ['Identificacao', 'Contato', 'Endereço', 'Usuário', 'Carteira', 'Resumo'],
       identificacao: ['','','',''],
       posicao: 0,
+
       nome: '',
       sobrenome: '',
       nascimento: '',
@@ -34,17 +30,20 @@ class Cadastro extends Component {
       uf: '',
       nomeApelido: '',
       senha: '',
-      confirmaSenha: '',
       credito: false,
       debito: false,
       boleto: false,
       pix: false,
+
+      confirmaSenha: '',      
       formaPagamento: [null, null, null, null]
+      
     }
 
     this.proximo = this.proximo.bind(this);
     this.voltar = this.voltar.bind(this);
     this.estadoChecado = this.estadoChecado.bind(this);
+    this.gravar = this.gravar.bind(this);
 
   }
 
@@ -147,6 +146,8 @@ class Cadastro extends Component {
           posicao: ++this.state.posicao,
         })
       }
+    }else if(this.state.posicao == 5){
+      this.gravar();
     }
   }
 
@@ -157,6 +158,31 @@ class Cadastro extends Component {
         posicao: --this.state.posicao
       })
     }
+  }
+
+  //Lógica para persistencia de dados
+  async gravar(){
+    await firebase.firestore().collection('cadastro').add({
+      nome: this.state.nome,
+      sobrenome: this.state.sobrenome,
+      dataNascimento: this.state.nascimento,
+      cpf: this.state.cpf,
+      email: this.state.email,
+      telefone: this.state.tel1,
+      telefone2: this.state.tel2,
+      logradouro: this.state.logradouro,
+      numero: this.state.numero,
+      bairro: this.state.bairro,
+      cep: this.state.cep,
+      cidade: this.state.cidade,
+      uf: this.state.uf,
+      nomeApelido: this.state.nomeApelido,
+      senha: this.state.senha,
+      credito: this.state.credito,
+      debito: this.state.debito,
+      boleto: this.state.boleto,
+      pix: this.state.pix
+    });
   }
 
   //Lógica do Checkbox forma de pagamento
@@ -227,7 +253,6 @@ class Cadastro extends Component {
 
   //Formulário
   formulario(){
-    //this.state.formaPagamento.splice(0, 0, <div>Crédito</div>)  
     switch(this.state.posicao){
       //Identificação
       case 0:
@@ -329,21 +354,29 @@ class Cadastro extends Component {
         );
       //Resumo
       case 5:
-        let subTitulo = ['Identificação' ,'Contato', 'Endereço', 'Usuário', 'Carteira']
+        let titCarteira = '';
+        
+        if(this.state.credito == false && this.state.debito == false && this.state.boleto == false && this.state.pix == false){
+          titCarteira = ''
+        }else{
+          titCarteira = 'Carteira'
+        }
 
-        let identificacao = ['Nome' , 'Sobrenome', 'Data de nascimento', 'CPF'];
+        let subTitulo = ['Identificação' ,'Contato', 'Endereço', 'Usuário', titCarteira]
+
+        let identificacao = ['Nome: ' , 'Sobrenome: ', 'Data de nascimento: ', 'CPF: '];
         let conteudoIdentificacao = [this.state.nome, this.state.sobrenome, this.state.nascimento, this.state.cpf];
 
-        let contato = ['E-mail' , 'Telefone/Celular 1', 'Telefone/Celular 2'];
+        let contato = ['E-mail: ' , 'Telefone/Celular 1: ', 'Telefone/Celular 2: '];
         let conteudoContato = [this.state.email, this.state.tel1, this.state.tel2];
 
-        let endereco = ['Logradouro' , 'Número', 'Bairro', 'CEP', 'Cidade', 'UF'];
+        let endereco = ['Logradouro: ' , 'Número: ', 'Bairro: ', 'CEP: ', 'Cidade: ', 'UF: '];
         let conteudoEndereco = [this.state.logradouro, this.state.numero, this.state.bairro, this.state.cep, this.state.cidade, this.state.uf];
 
-        let usuario = ['Nome/Apelido'];
+        let usuario = ['Nome/Apelido: '];
         let conteudoUsuario = [this.state.nomeApelido];
 
-        let carteira = ['Forma(s) de pagamento'];
+        let carteira = [''];
         let conteudoCarteira = [this.state.formaPagamento];
 
 
@@ -351,22 +384,25 @@ class Cadastro extends Component {
         let rowsConteudo = [conteudoIdentificacao, conteudoContato, conteudoEndereco, conteudoUsuario, conteudoCarteira];
 
         let resumo = []
-
+        
         for(let i = 0; i < subTitulo.length; i++){
           resumo.push(
             <h2 className='sub-titulo-card pt-4'>{subTitulo[i]}</h2>
           );
-  
+              
           //xxl={1} xl={1} lg={1} md={1}  sm={1} xs={2}
+            
           for(let j = 0; j <= (rowsTitulo[i].length -1); j++){
-            resumo.push(
-              <div>{rowsTitulo[i][j]}: {rowsConteudo[i][j]}</div>   
-            );
+            if(rowsConteudo[i][j] != '' && rowsConteudo[i][j] != null ){
+              resumo.push( 
+                <div>{rowsTitulo[i][j]} {rowsConteudo[i][j]}</div>   
+              );
+            }
           }  
         }
         
       return(
-        <div className='d-grid pb-2'>
+        <div className='d-grid pb-4'>
           {resumo}
         </div>
       );

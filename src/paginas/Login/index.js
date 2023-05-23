@@ -14,19 +14,6 @@ class Login extends Component {
     }
   }
   
-  cabecalho(){
-    return(
-      <header className='mb-5 bg-light cabecalho-header fixed-top'>
-        <Container>
-          <Row>
-            <Col xxl={12}>    
-              <h1 className='titulo-cabecalho pt-4 pb-4'>Home</h1>
-            </Col>
-          </Row>
-        </Container>
-      </header>
-    );
-  }
 
   card(){
     return(
@@ -68,7 +55,6 @@ class Login extends Component {
   render() {
     return (
       <div>
-        {this.cabecalho()}
         {this.card()}
       </div>
     )
