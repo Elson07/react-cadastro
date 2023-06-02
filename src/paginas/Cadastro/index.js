@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import firebase from '../../Firebase';
 import "../../App.css";
 import ArrowLeft from '../../assets/Icones/arrow-left-short.svg'
-import { Row, Col, Container } from 'react-bootstrap';
+import CheckCicle from '../../assets/Icones/check2-circle.svg'
+import ExclamationCicle from '../../assets/Icones/exclamation-circle.svg'
+import { Row, Col, Container, Spinner, Button } from 'react-bootstrap';
+
+import Alert from 'react-bootstrap/Alert';
+
 
 
 class Cadastro extends Component {
@@ -11,32 +16,18 @@ class Cadastro extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titulo: ['Identificacao', 'Contato', 'Endereço', 'Usuário', 'Carteira', 'Resumo'],
-      identificacao: ['','','',''],
       posicao: 0,
+      titulo: ['Identificacao', 'Contato', 'Endereço', 'Usuário', 'Carteira', 'Resumo'],
 
-      nome: '',
-      sobrenome: '',
-      nascimento: '',
-      cpf: '',
-      email: '',
-      tel1: '',
-      tel2: '',
-      logradouro: '',
-      numero: '',
-      bairro: '',
-      cep: '',
-      cidade: '',
-      uf: '',
-      nomeApelido: '',
-      senha: '',
-      credito: false,
-      debito: false,
-      boleto: false,
-      pix: false,
+      nome: '', sobrenome: '', nascimento: '', cpf: '', 
+      email: '', tel1: '', tel2: '', 
+      logradouro: '', numero: '', bairro: '', cep: '', cidade: '', uf: '',
+      nomeApelido: '', senha: '',
+      credito: false, debito: false, boleto: false, pix: false,
 
       confirmaSenha: '',      
-      formaPagamento: [null, null, null, null]
+      formaPagamento: [null, null, null, null],
+      //animacao: ["Proxímo", "Confirmar", <div><Spinner animation="border" variant="light" size="sm" /> Gravando...</div>],
       
     }
 
@@ -44,7 +35,6 @@ class Cadastro extends Component {
     this.voltar = this.voltar.bind(this);
     this.estadoChecado = this.estadoChecado.bind(this);
     this.gravar = this.gravar.bind(this);
-
   }
 
   //Cabeçalho desta pagina
@@ -73,7 +63,7 @@ class Cadastro extends Component {
       <Container className='card-cadastro' style={{width:'22rem'}}>
         <Row className='p-2 cabecalho-card'>
           <Col>
-            <h1 className='titulo-card-cabecalho'>{this.state.titulo[this.state.posicao]}</h1>
+            <h1 className='titulo-card-cabecalho'>{this.state.titulo[this.state.posicao]}</h1> 
           </Col>
         </Row>
         <Row>
@@ -82,7 +72,7 @@ class Cadastro extends Component {
       </Container>
     );
   }
-
+  
   //Lógica para proxíma etapa do cadastro
   proximo(){
     if(this.state.posicao < 5){
@@ -146,8 +136,6 @@ class Cadastro extends Component {
           posicao: ++this.state.posicao,
         })
       }
-    }else if(this.state.posicao == 5){
-      this.gravar();
     }
   }
 
@@ -160,28 +148,79 @@ class Cadastro extends Component {
     }
   }
 
-  //Lógica para persistencia de dados
+
+  logar(){
+    window.location.href = "/";
+  }
+
+  //Persistencia de dados
   async gravar(){
-    await firebase.firestore().collection('cadastro').add({
-      nome: this.state.nome,
-      sobrenome: this.state.sobrenome,
-      dataNascimento: this.state.nascimento,
-      cpf: this.state.cpf,
-      email: this.state.email,
-      telefone: this.state.tel1,
-      telefone2: this.state.tel2,
-      logradouro: this.state.logradouro,
-      numero: this.state.numero,
-      bairro: this.state.bairro,
-      cep: this.state.cep,
-      cidade: this.state.cidade,
-      uf: this.state.uf,
-      nomeApelido: this.state.nomeApelido,
-      senha: this.state.senha,
-      credito: this.state.credito,
-      debito: this.state.debito,
-      boleto: this.state.boleto,
-      pix: this.state.pix
+
+    //Alerta de carregamento 
+    this.setState({
+      alerta: 
+        <Alert className='position-alerta' variant="success">
+          <Spinner animation="border" variant="success" size='sm'/> <strong>Gravando...</strong>
+        </Alert>
+    });
+
+    //Credenciais para autenticação e associação de coleção de dados
+    await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
+    .then(async (retorno)=>{
+
+      //Coleção de dados
+      await firebase.firestore().collection('cadastro').doc(retorno.user.uid).set({
+        nome: this.state.nome,
+        sobrenome: this.state.sobrenome,
+        dataNascimento: this.state.nascimento,
+        cpf: this.state.cpf,
+        telefone: this.state.tel1,
+        telefone2: this.state.tel2,
+        logradouro: this.state.logradouro,
+        numero: this.state.numero,
+        bairro: this.state.bairro,
+        cep: this.state.cep,
+        cidade: this.state.cidade,
+        uf: this.state.uf,
+        nomeApelido: this.state.nomeApelido,
+        credito: this.state.credito,
+        debito: this.state.debito,
+        boleto: this.state.boleto,
+        pix: this.state.pix
+      });
+
+      //Alerta de sucesso 
+      this.setState({
+        alerta: 
+        <Alert className='position-alerta' variant="success">
+          <img width={'36px'} src={CheckCicle}></img> Sucesso!
+          <p>
+            Parabéns {this.state.nomeApelido}, seu cadastro foi realizado com sucesso!<br/>
+            Click no botão Logar para realizar seu acesso.
+          </p>
+          <Button onClick={this.logar}>Logar</Button>
+        </Alert>
+      });
+
+    }).catch( (erro)=>{
+      console.log(erro.code); 
+      console.log(erro.message);
+      //Alerta de fracasso
+      let error = '';
+      if(erro.code == "auth/email-already-in-use"){
+        error = <p>O endereço de e-mail já está sendo usado por outra conta, clique em <Link to="/">recuperar</Link> ou edite o e-mail atual</p>
+      }else if(erro.code == "auth/network-request-failed"){
+        error = <p>Ocorreu um erro de rede (como tempo limite, conexão interrompida ou host inacessível).</p>
+      }
+
+      this.setState({
+        alerta: 
+        <Alert className='position-alerta' variant="danger">
+          <img width={'36px'} src={ExclamationCicle}></img> Erro!
+          {error}
+        </Alert>
+      });
+
     });
   }
 
@@ -212,20 +251,23 @@ class Cadastro extends Component {
 
   //Botão Voltar e Avançar
   navegacao(){
-    let textBotaoProximo = 'Proxímo';
+    let posicaoBotao = "Proxímo";
+    let botao = this.proximo;
     let tamBot = 6;
     let voltar = 'd-grid ';
     if(this.state.posicao == 0){
       tamBot = 12;
-      voltar = 'd-grid d-none'
+      voltar = 'd-grid d-none';
     }else{
       tamBot = 6;
       voltar = 'd-grid ';
     }
     if(this.state.posicao == 5){
-      textBotaoProximo = 'Confirmar'
+      posicaoBotao = "Confirmar";
+      botao = this.gravar;
     }else{
-      textBotaoProximo = 'Proxímo'
+      posicaoBotao = "Proxímo";
+      botao = this.proximo;
     }
 
     return(
@@ -241,7 +283,7 @@ class Cadastro extends Component {
 
           <Col xxl={tamBot} xs={tamBot}>
             <div className=" d-grid ">
-              <button className='p-2 mb-3 btn-verde' onClick={this.proximo}>{textBotaoProximo}</button>
+              <button className='p-2 mb-3 btn-verde' onClick={botao}>{posicaoBotao}</button>
             </div>
           </Col>
 
@@ -354,12 +396,12 @@ class Cadastro extends Component {
         );
       //Resumo
       case 5:
-        let titCarteira = '';
+        let titCarteira = null;
         
         if(this.state.credito == false && this.state.debito == false && this.state.boleto == false && this.state.pix == false){
-          titCarteira = ''
+          titCarteira = null;
         }else{
-          titCarteira = 'Carteira'
+          titCarteira = 'Carteira';
         }
 
         let subTitulo = ['Identificação' ,'Contato', 'Endereço', 'Usuário', titCarteira]
@@ -415,6 +457,7 @@ class Cadastro extends Component {
       <div>
         {this.cabecalho()}
         {this.card()}
+        {this.state.alerta}
         {this.navegacao()}
       </div>
     )
