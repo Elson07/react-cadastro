@@ -6,9 +6,9 @@ import Home from "./paginas/Home"
 
 const Rotas = ()=>{
     return(
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter>
             <Routes>
-                <Route exact={true} path="/" element={<Login/>}/>
+                <Route exact={true} path="/react-cadastro" element={<Login/>}/>
                 <Route exact={true} path="/cadastro" element={<Cadastro/>}/>
                 <Route exact={true} path="/home" element={<Home/>}/>
             </Routes>

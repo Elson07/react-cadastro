@@ -97,7 +97,7 @@ class Home extends Component {
         <Container>
           <Row>
             <Col xxl={2}  xs={2} className='text-d'>
-              <Link to={'/'}>
+              <Link to={'/react-cadastro'}>
                 <img className='m-4' width={'36px'} src={ArrowLeft}></img>
               </Link>
             </Col>

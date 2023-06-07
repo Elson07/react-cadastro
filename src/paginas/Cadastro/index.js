@@ -150,7 +150,7 @@ class Cadastro extends Component {
 
 
   logar(){
-    window.location.href = "/";
+    window.location.href = "/react-cadastro";
   }
 
   //Persistencia de dados
