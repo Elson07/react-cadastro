@@ -44,7 +44,7 @@ class Cadastro extends Component {
         <Container>
           <Row>
             <Col xxl={2}  xs={2} className='text-d'>
-              <Link to={'/'}>
+              <Link to={'/react-cadastro'}>
                 <img className='m-4' width={'36px'} src={ArrowLeft}></img>
               </Link>
             </Col>
@@ -150,7 +150,7 @@ class Cadastro extends Component {
 
 
   logar(){
-    window.location.href = "/react-cadastro";
+    window.location.href = "./react-cadastro";
   }
 
   //Persistencia de dados
