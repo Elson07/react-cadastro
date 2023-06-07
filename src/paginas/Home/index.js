@@ -4,16 +4,28 @@ import firebase from '../../Firebase';
 
 //Meu estilo
 import "../../App.css";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import ArrowLeft from '../../assets/Icones/arrow-left-short.svg'
 
 class Home extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      nome: '',
-      sobrenome: '',
-      dataNascimento: '',
+      nome: <Spinner animation="border" variant="success" size='sm'/>,
+      sobrenome: <Spinner animation="border" variant="success" size='sm'/>,
+      dataNascimento: <Spinner animation="border" variant="success" size='sm'/>,
+      email: <Spinner animation="border" variant="success" size='sm'/>, 
+      tel: <Spinner animation="border" variant="success" size='sm'/>,
+      tel2: <Spinner animation="border" variant="success" size='sm'/>,
+      logradouro: <Spinner animation="border" variant="success" size='sm'/>,
+      numero: <Spinner animation="border" variant="success" size='sm'/>,
+      bairro: <Spinner animation="border" variant="success" size='sm'/>,
+      cep: <Spinner animation="border" variant="success" size='sm'/>,
+      cidade: <Spinner animation="border" variant="success" size='sm'/>,
+      uf: <Spinner animation="border" variant="success" size='sm'/>,
+      nomeApelido: <Spinner animation="border" variant="success" size='sm'/>,
+      carteira: <Spinner className='m-3' animation="border" variant="success"/>
     }
   }
   
@@ -77,14 +89,33 @@ class Home extends Component {
             });
         }
     });
-}
+  } 
   
+  cabecalho(){
+    return(
+      <header className='mb-5 bg-light cabecalho-header fixed-top'>
+        <Container>
+          <Row>
+            <Col xxl={2}  xs={2} className='text-d'>
+              <Link to={'/'}>
+                <img className='m-4' width={'36px'} src={ArrowLeft}></img>
+              </Link>
+            </Col>
+            <Col xxl={10} xs={10}>    
+              <h1 className='titulo-cabecalho pt-4 pb-4'>Home</h1>
+            </Col>
+          </Row>
+        </Container>
+      </header>
+    );
+  }
+
   card(){
     return(
       <Container className='card-cadastro' style={{width:'22rem'}}>
         <Row className='p-2 cabecalho-card'>
           <Col>
-            <h1 className='titulo-card-cabecalho'> Home </h1>
+            <h1 className='titulo-card-cabecalho'> Resumo </h1>
           </Col>
         </Row>
         <Row className='pb-4'>
@@ -96,7 +127,7 @@ class Home extends Component {
           <h4 className='pt-4'>Contato</h4>
           <div>E-mail: {this.state.email}</div>
           <div>Telefone 1: {this.state.tel}</div>
-          <div>Telefone 2: {this.state.te2}</div>
+          <div>Telefone 2: {this.state.tel2}</div>
 
           <h4 className='pt-4'>Endereço</h4>
           <div>Logradouro: {this.state.logradouro}</div>
@@ -121,6 +152,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        {this.cabecalho()}
         {this.card()}
       </div>
     )
